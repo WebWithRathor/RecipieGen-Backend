@@ -6,8 +6,10 @@ import recipeRoutes from "./routes/recipe.Routes.js";
 import { config } from "./config/config.js";
 import cookieParser from "cookie-parser";
 import { isAuthenticated } from "./middlewares/auth.middleware.js";
+import helmet from "helmet";
 
 const app = express();
+app.use(helmet());
 
 const allowedOrigins = config.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"];
 
