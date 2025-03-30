@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // Initialize Generative AI client
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
+
 // System instruction for the AI model
 const systemInstruction = `
 You are a professional culinary assistant specializing in generating delicious and creative recipes.
@@ -71,13 +72,14 @@ const textConfig = {
 };
 
 // Function to generate recipe suggestions
-export const getRecipeSuggestions = async (ingredients = []) => {
+export const getRecipeSuggestions = async (ingredients = [],description="",preference) => {
   try {
     const chatSession = textModel.startChat({ generationConfig: textConfig });
+    
     const result = await chatSession.sendMessage(
-      `Suggest 4-5 creative dish ideas using these ingredients: ${ingredients.join(", ")}. Return a valid JSON array.`
+      `Suggest 4-5 creative dish ideas using these ingredients: ${ingredients.join(", ")} and with this description ${description.trim()} and with this ${preference.trim()}. Return a valid JSON array.`
     );
-
+    
     let suggestions = result?.response?.text();
 
     if (typeof suggestions === "string") {
@@ -92,6 +94,8 @@ export const getRecipeSuggestions = async (ingredients = []) => {
 
     return  suggestions;
   } catch (error) {
+    console.log(error);
+    
     console.error("Error generating recipe suggestions:", error.message);
     return [];
   }
