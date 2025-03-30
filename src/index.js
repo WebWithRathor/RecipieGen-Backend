@@ -9,10 +9,7 @@ import { isAuthenticated } from "./middlewares/auth.middleware.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "https://recipie-gen-frontend-9eqtd6uor.vercel.app",
-  "http://localhost:5173" // Allow localhost for development
-];
+const allowedOrigins = config.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"];
 
 app.use(cors({
   origin: (origin, callback) => {

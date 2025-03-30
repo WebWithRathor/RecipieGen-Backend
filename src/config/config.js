@@ -17,6 +17,6 @@ export const config = {
     REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN || "7d",
     REFRESH_COOKIE_EXPIRES_IN: process.env.REFRESH_COOKIE_EXPIRES_IN || "7d",
 
-
+    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
     CLIENT_URL: process.env.CLIENT_URL,
 }
