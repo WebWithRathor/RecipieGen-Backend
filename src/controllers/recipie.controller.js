@@ -54,7 +54,7 @@ export const getRecipeDetailsController = async (req, res) => {
       return res.status(200).json({ recipe: JSON.parse(cachedRecipe) });
     } else {
       let recipe = await Recipe.findOne({ dishName });
-      redis.set(key, JSON.stringify(recipe), "EX", 3600 * 24);
+      
       if (!recipe) {
         const newRecipeData = await getRecipeDetails(dishName);
         if (!newRecipeData) {
@@ -63,6 +63,7 @@ export const getRecipeDetailsController = async (req, res) => {
         recipe = new Recipe(newRecipeData);
         await recipe.save();
       }
+      redis.set(key, JSON.stringify(recipe), "EX", 3600 * 24);
       res.status(200).json({ recipe });
     }
   } catch (error) {
