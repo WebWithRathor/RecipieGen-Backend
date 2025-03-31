@@ -9,6 +9,7 @@ import { isAuthenticated } from "./middlewares/auth.middleware.js";
 import helmet from "helmet";
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(helmet());
 
 const allowedOrigins = config.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"];
