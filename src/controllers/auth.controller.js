@@ -24,7 +24,7 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
         
         if (email === undefined || password === undefined) return responses.MISSING_CREDENTIALS(res);
-        const user = await userModel.findOne({ email });
+        const user = await userModel.findOne({ email }).populate("savedDishes");
         if (!user) return responses.USER_NOT_FOUND(res);
         const isMatch = await user.comparePassword(password);
         if (!isMatch) return responses.INVALID_CREDENTIALS(res);
