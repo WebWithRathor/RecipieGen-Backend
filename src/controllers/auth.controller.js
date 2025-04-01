@@ -38,18 +38,10 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        console.log("res.cookie");
-        
-         if (!req.cookies.refreshToken) {
-            return responses.BAD_REQUEST(res, "No refresh token found");
-        }
 
         res.clearCookie("accessToken", { httpOnly: true, secure: true, sameSite: "None" });
         res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "None" });
-
-        
         const user = await userModel.findOneAndUpdate({ refreshToken: req.cookies.refreshToken }, { refreshToken: null });
-        console.log(user);
         return successResponse(res, 200, "Logout successful");
     } catch (error) {
         return responses.SERVER_ERROR(res, error);
